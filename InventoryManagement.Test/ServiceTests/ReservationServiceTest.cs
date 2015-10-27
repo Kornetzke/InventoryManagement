@@ -58,7 +58,7 @@ namespace InventoryManagement.Test.ServiceTests
 
             Assert.That(resList, Is.EquivalentTo(reservationList));
         }
-        
+
 
         [Test]
         public void ServiceShouldValidateReservations()
@@ -75,7 +75,7 @@ namespace InventoryManagement.Test.ServiceTests
         [Test]
         public void ServiceShouldDeleteReservationFromRepository()
         {
-            
+
             Reservation res = reservationService.GetByID(2);
             Assert.That(res, Is.Not.Null);
 
@@ -87,7 +87,7 @@ namespace InventoryManagement.Test.ServiceTests
 
         [Test]
         public void ServiceShouldDeleteReservationWhere()
-        { 
+        {
             reservationService.DeleteWhere(r => true);
             Assert.That(reservationService.GetAll().Count(), Is.EqualTo(0));
         }
@@ -97,20 +97,19 @@ namespace InventoryManagement.Test.ServiceTests
         {
             List<Reservation> rList = reservationRepository.GetAll() as List<Reservation>;
 
-            for(int i = rList.Count-1; i >= 0; i--)
+            for (int i = rList.Count - 1; i >= 0; i--)
             {
                 reservationRepository.Delete(rList[i]);
             }
 
             Assert.That(reservationService.GetAll().Count, Is.EqualTo(0));
-            Reservation res = new Reservation()
-            {
-                InventoryID = 1,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddHours(1)
-            };
 
-            reservationService.GetConflictingReservations(res);
+            int InventoryID = 1;
+            DateTime startTime = DateTime.Now;
+            DateTime endTime = DateTime.Now.AddHours(1);
+
+
+            reservationService.GetConflictingReservations(InventoryID, startTime, endTime);
             //Assert.Fail("Not Complete");
         }
 

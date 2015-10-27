@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using InventoryManagement.DAL.Repositories;
+using System.Linq;
 using InventoryManagement.DAL.Infrastructure;
 using InventoryManagement.Model.DomainModels;
 using InventoryManagement.Service.DataValidation;
@@ -22,18 +20,23 @@ namespace InventoryManagement.Service
                 this.InventoryRepository = InventoryRepository;
         }
 
-        public IEnumerable<Reservation> GetConflictingReservations(Reservation res)
+        public IEnumerable<Reservation> GetConflictingReservations(int inventoryID, DateTime startTime, DateTime endTime)
         {
-            List<Reservation> ConflictingList = new List<Reservation>();
+            List<Reservation> ConflictingList;
 
-            //gets a list of Inventory that are part of the Equipment Group whose Status is not disabling
-            //Gets Inventory whose available for checkout
-            
-            
+            ConflictingList = Repository.GetWhere(r => r.InventoryID == inventoryID).ToList();
+
+            throw new NotImplementedException("Not finished");
 
             return ConflictingList;
         }
 
+        /// <summary>
+        /// This method needs fixing, removing these "if" statements would be nice.
+        /// </summary>
+        /// <param name="res"></param>
+        /// <returns>
+        /// </returns>
         public override Validation Validate(Reservation res)
         {
             Validation validate = new Validation();
@@ -75,11 +78,15 @@ namespace InventoryManagement.Service
                     validate.AddError("reservation.StartDate", "StartDate must be before EndDate");
                     validate.AddError("reservation.EndDate", "EndDate must be after StartDate");
                 }
+                if (res.Inventory.Status.IsDisabling.Value)
+                    validate.AddError("reservation.Inventory","Inventory status is Disabled");
+
 
                 if (DataValidationHelper.IsValidEmailAddress(res.CustomerEmail) == false)
                     validate.AddError("reservation.CustomerEmail", "Invalid Email");
                 if (DataValidationHelper.IsValidPhoneNumber(res.CustomerPhone) == false)
                     validate.AddError("reservation.CustomerPhone", "Invalid Phone Number");
+
             }
             return validate;
         }
@@ -88,6 +95,6 @@ namespace InventoryManagement.Service
 
     public interface IReservationService : IServiceBase<Reservation>
     {
-        IEnumerable<Reservation> GetConflictingReservations(Reservation res);
+        IEnumerable<Reservation> GetConflictingReservations(int inventoryID, DateTime startTime, DateTime endTime);
     }
 }
