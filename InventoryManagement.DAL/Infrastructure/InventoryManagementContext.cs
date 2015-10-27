@@ -117,7 +117,7 @@ namespace InventoryManagement.DAL.Infrastructure
                 ConferenceGroup = "ConferenceGroup",
                 Comment = "Comment",
                 CreationDate = DateTime.Now,
-                Equipment = context.Equipments.First()
+                Inventory = context.Inventory.First()
             });
             context.Commit();
             context.Reservations.Add(new Reservation()
@@ -133,7 +133,7 @@ namespace InventoryManagement.DAL.Infrastructure
                 ConferenceGroup = "ConferenceGroup",
                 Comment = "CheckIn",
                 CreationDate = DateTime.Now.AddHours(-3),
-                Equipment = context.Equipments.First()
+                Inventory = context.Inventory.First()
             });
             context.Commit();
 
@@ -188,11 +188,11 @@ namespace InventoryManagement.DAL.Infrastructure
         {
             List<Reservation> reservationList = new List<Reservation>();
 
-            reservationList.Add(new Reservation() { ID = 1, CustomerNameFirst = "FName", CustomerNameLast = "LName", CustomerEmail = "Customer@email.com", CustomerPhone = "6589875462", CreationDate = DateTime.Now, StartDate = DateTime.Now, EndDate = DateTime.Now.AddHours(1), EquipmentID = 1, ConferenceGroup = "ConfGroup", StudentOrg = "StudORg", Comment = "OutTest", Equipment = GetEquipmentList().Where(e => e.ID == 1).FirstOrDefault(), CheckIn = GetCheckInList().Where(c => c.ReservationID == 1).FirstOrDefault() });
+            reservationList.Add(new Reservation() { ID = 1, CustomerNameFirst = "FName", CustomerNameLast = "LName", CustomerEmail = "Customer@email.com", CustomerPhone = "6589875462", CreationDate = DateTime.Now, StartDate = DateTime.Now, EndDate = DateTime.Now.AddHours(1), InventoryID = 1, ConferenceGroup = "ConfGroup", StudentOrg = "StudORg", Comment = "OutTest", Inventory = GetInventoryList().Where(e => e.ID == 1).FirstOrDefault(), CheckIn = GetCheckInList().Where(c => c.ReservationID == 1).FirstOrDefault() });
 
-            reservationList.Add(new Reservation() { ID = 2, CustomerNameFirst = "FName2", CustomerNameLast = "LName2", CustomerEmail = "Customer2@email.com", CustomerPhone = "6589875462", CreationDate = DateTime.Now.AddHours(-1.1), StartDate = DateTime.Now.AddHours(-1.1), EndDate = DateTime.Now.AddHours(-.1), EquipmentID = 3, ConferenceGroup = "ConfGroup", StudentOrg = "StudORg", Comment = "OverDueTest", Equipment = GetEquipmentList().Where(e => e.ID == 3).FirstOrDefault(), CheckIn = GetCheckInList().Where(c => c.ReservationID == 2).FirstOrDefault() });
+            reservationList.Add(new Reservation() { ID = 2, CustomerNameFirst = "FName2", CustomerNameLast = "LName2", CustomerEmail = "Customer2@email.com", CustomerPhone = "6589875462", CreationDate = DateTime.Now.AddHours(-1.1), StartDate = DateTime.Now.AddHours(-1.1), EndDate = DateTime.Now.AddHours(-.1), InventoryID = 3, ConferenceGroup = "ConfGroup", StudentOrg = "StudORg", Comment = "OverDueTest", Inventory = GetInventoryList().Where(e => e.ID == 3).FirstOrDefault(), CheckIn = GetCheckInList().Where(c => c.ReservationID == 2).FirstOrDefault() });
 
-            reservationList.Add(new Reservation() { ID = 3, CustomerNameFirst = "FName3", CustomerNameLast = "LName3", CustomerEmail = "Customer3@email.com", CustomerPhone = "6589875462", CreationDate = DateTime.Now.AddHours(-2), StartDate = DateTime.Now.AddHours(-2), EndDate = DateTime.Now.AddHours(-1), EquipmentID = 1, ConferenceGroup = "ConfGroup", StudentOrg = "StudORg", Comment = "ReturnedTest", Equipment = GetEquipmentList().Where(e => e.ID == 1).FirstOrDefault(), CheckIn = GetCheckInList().Where(c => c.ReservationID == 3).FirstOrDefault() });
+            reservationList.Add(new Reservation() { ID = 3, CustomerNameFirst = "FName3", CustomerNameLast = "LName3", CustomerEmail = "Customer3@email.com", CustomerPhone = "6589875462", CreationDate = DateTime.Now.AddHours(-2), StartDate = DateTime.Now.AddHours(-2), EndDate = DateTime.Now.AddHours(-1), InventoryID = 1, ConferenceGroup = "ConfGroup", StudentOrg = "StudORg", Comment = "ReturnedTest", Inventory = GetInventoryList().Where(e => e.ID == 1).FirstOrDefault(), CheckIn = GetCheckInList().Where(c => c.ReservationID == 3).FirstOrDefault() });
 
             return reservationList;
         }

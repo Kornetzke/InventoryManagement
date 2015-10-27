@@ -28,7 +28,7 @@ namespace InventoryManagement.Service
 
             //gets a list of Inventory that are part of the Equipment Group whose Status is not disabling
             //Gets Inventory whose available for checkout
-            List<Inventory> inventoryList = InventoryRepository.GetWhere(i => i.EquipmentID == res.EquipmentID && i.Status.IsDisabling == false).ToList();
+            
             
 
             return ConflictingList;
@@ -43,11 +43,11 @@ namespace InventoryManagement.Service
                 validate.AddError("reservation", "reservation can not be null");
             else
             {
-                if (res.EquipmentID == 0)
+                if (res.InventoryID == 0)
                     validate.AddError("reservation.EquipmentID", "EquipmentID can not be null");
                 else
-                    if(EquipmentRepository.GetById(res.EquipmentID) == null)
-                        validate.AddError("reservation.EquipmentID","Equipment with ID:"+res.EquipmentID+" not found");
+                    if(InventoryRepository.GetById(res.InventoryID) == null)
+                        validate.AddError("reservation.EquipmentID","Equipment with ID:"+res.InventoryID + " not found");
 
                 if (String.IsNullOrEmpty(res.CustomerNameFirst))
                     validate.AddError("reservation.CustomerNameFirst", "CustomerNameFirst can not be null");

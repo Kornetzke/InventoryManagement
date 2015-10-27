@@ -31,7 +31,9 @@ namespace InventoryManagement.WebAPI.ViewModels
         public string Comment { get; set; }
 
 
-        public int EquipmentID { get; set; }
+        public int InventoryID { get; set; }
+
+        public string EquipmentName { get; set; }
         //public EquipmentViewModel Equipment { get; set; }
         //public CheckedInViewModel CheckIn { get; set; }
         public bool IsCheckedIn { get; set; }

@@ -26,7 +26,8 @@ namespace InventoryManagement.WebAPI.Mapping
             Mapper.CreateMap<Equipment, EquipmentViewModel>();
             Mapper.CreateMap<Group, GroupViewModel>();
             Mapper.CreateMap<Reservation, ReservationViewModel>()
-                .ForMember(reservationViewModel => reservationViewModel.IsCheckedIn, map => map.MapFrom(reservation => reservation.CheckIn != null ? true : false));
+                .ForMember(reservationViewModel => reservationViewModel.IsCheckedIn, map => map.MapFrom(reservation => reservation.CheckIn != null ? true : false))
+                .ForMember(resViewModel => resViewModel.EquipmentName,map => map.MapFrom(resDM => resDM.Inventory.Equipment.Name ));
             Mapper.CreateMap<CheckIn, CheckedInViewModel>();
            
         }

@@ -27,7 +27,7 @@ namespace InventoryManagement.Test.MockObjects
                 CustomerNameLast = entity.CustomerNameLast,
                 CustomerEmail = entity.CustomerEmail,
                 CustomerPhone = entity.CustomerPhone,
-                EquipmentID = entity.EquipmentID,
+                InventoryID = entity.InventoryID,
                 CreationDate = entity.CreationDate,
                 StartDate = entity.StartDate,
                 EndDate = entity.EndDate,
@@ -47,7 +47,7 @@ namespace InventoryManagement.Test.MockObjects
                 r.CustomerNameLast = entity.CustomerNameLast;
                 r.CustomerEmail = entity.CustomerEmail;
                 r.CustomerPhone = entity.CustomerPhone;
-                r.EquipmentID = entity.EquipmentID;
+                r.InventoryID = entity.InventoryID;
                 r.CreationDate = entity.CreationDate;
                 r.StartDate = entity.StartDate;
                 r.EndDate = entity.EndDate;

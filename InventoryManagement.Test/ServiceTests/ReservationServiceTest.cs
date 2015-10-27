@@ -105,7 +105,7 @@ namespace InventoryManagement.Test.ServiceTests
             Assert.That(reservationService.GetAll().Count, Is.EqualTo(0));
             Reservation res = new Reservation()
             {
-                EquipmentID = 1,
+                InventoryID = 1,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(1)
             };

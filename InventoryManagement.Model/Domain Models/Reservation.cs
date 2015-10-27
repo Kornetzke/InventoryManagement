@@ -36,8 +36,8 @@ namespace InventoryManagement.Model.DomainModels
         public string Comment { get; set; }
 
         [Required]
-        public int EquipmentID { get; set; }
-        public virtual Equipment Equipment { get; set; }
+        public int InventoryID { get; set; }
+        public virtual Inventory Inventory { get; set; }
         public virtual CheckIn CheckIn { get; set; }
     }
 }
