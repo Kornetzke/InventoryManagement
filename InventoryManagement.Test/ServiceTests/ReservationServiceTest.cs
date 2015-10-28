@@ -63,10 +63,21 @@ namespace InventoryManagement.Test.ServiceTests
         [Test]
         public void ServiceShouldValidateReservations()
         {
-            Assert.That(reservationService.Validate(null).IsValid(), Is.EqualTo(false));
+            Assert.That(reservationService.Validate(null).IsValid(), Is.EqualTo(false),"Null Reservation Failed");
 
             Reservation res = new Reservation();
-            Assert.That(reservationService.Validate(res).IsValid(), Is.EqualTo(false));
+            Assert.That(reservationService.Validate(res).IsValid(), Is.EqualTo(false),"Reservation with Null values");
+
+            res.InventoryID = 1;
+            res.CustomerNameFirst = res.CustomerNameLast = "name";
+            res.CustomerNameFirst = "newName";
+            res.CustomerEmail = "Email@eamil.com";
+            res.CustomerPhone = "6086585015";
+            res.CreationDate = DateTime.Now;
+            res.StartDate = DateTime.Now;
+            res.EndDate = DateTime.Now.AddHours(1);
+
+            Assert.That(reservationService.Validate(res).IsValid(), Is.EqualTo(true), "Reservation with required values");
 
             // Add required business properties    
             //Assert.Fail("Not Complete");        

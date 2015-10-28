@@ -15,9 +15,10 @@ namespace InventoryManagement.Service
         private IInventoryRepository InventoryRepository;
 
         public ReservationService(IReservationRepository Repository, IEquipmentRepository EquipmentRepository, IInventoryRepository InventoryRepository, IUnitOfWork UnitofWork)
-            : base(Repository, UnitofWork) {
-                this.EquipmentRepository = EquipmentRepository;
-                this.InventoryRepository = InventoryRepository;
+            : base(Repository, UnitofWork)
+        {
+            this.EquipmentRepository = EquipmentRepository;
+            this.InventoryRepository = InventoryRepository;
         }
 
         public IEnumerable<Reservation> GetConflictingReservations(int inventoryID, DateTime startTime, DateTime endTime)
@@ -46,11 +47,18 @@ namespace InventoryManagement.Service
                 validate.AddError("reservation", "reservation can not be null");
             else
             {
-                if (res.InventoryID == 0)
-                    validate.AddError("reservation.EquipmentID", "EquipmentID can not be null");
-                else
-                    if(InventoryRepository.GetById(res.InventoryID) == null)
-                        validate.AddError("reservation.EquipmentID","Equipment with ID:"+res.InventoryID + " not found");
+                if (res.InventoryID == null)
+                    validate.AddError("reservation.InventoryID", "InventoryID can not be null");
+                else if (res.Inventory == null)
+                {
+                    Inventory i = InventoryRepository.GetById(res.InventoryID.Value);
+                    if (i != null)
+                        res.Inventory = i;
+                    else
+                        validate.AddError("reservation.Inventory", "Inventory not found");
+
+                }
+
 
                 if (String.IsNullOrEmpty(res.CustomerNameFirst))
                     validate.AddError("reservation.CustomerNameFirst", "CustomerNameFirst can not be null");
@@ -63,7 +71,7 @@ namespace InventoryManagement.Service
 
                 if (String.IsNullOrEmpty(res.CustomerPhone))
                     validate.AddError("reservation.CustomerPhone", "CustomerPhone can not be null");
-                
+
                 if (res.CreationDate == null)
                     validate.AddError("reservation.CreationDate", "CreationDate can not be null");
 
@@ -72,14 +80,14 @@ namespace InventoryManagement.Service
 
                 if (res.EndDate == null)
                     validate.AddError("reservation.EndDate", "EndDate can not be null");
-                    
-                if(res.StartDate != null && res.EndDate != null && res.StartDate > res.EndDate)
+
+                if (res.StartDate != null && res.EndDate != null && res.StartDate > res.EndDate)
                 {
                     validate.AddError("reservation.StartDate", "StartDate must be before EndDate");
                     validate.AddError("reservation.EndDate", "EndDate must be after StartDate");
                 }
-                if (res.Inventory.Status.IsDisabling.Value)
-                    validate.AddError("reservation.Inventory","Inventory status is Disabled");
+                if (res.Inventory?.Status?.IsDisabling.Value == true)
+                    validate.AddError("reservation.Inventory", "Inventory status is Disabled");
 
 
                 if (DataValidationHelper.IsValidEmailAddress(res.CustomerEmail) == false)
